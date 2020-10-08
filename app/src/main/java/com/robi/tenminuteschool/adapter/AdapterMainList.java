@@ -1,6 +1,8 @@
 package com.robi.tenminuteschool.adapter;
 
 import android.app.Activity;
+import android.transition.AutoTransition;
+import android.transition.TransitionManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
-import com.github.florent37.expansionpanel.ExpansionHeader;
-import com.github.florent37.expansionpanel.ExpansionLayout;
 import com.google.android.material.card.MaterialCardView;
 import com.robi.tenminuteschool.R;
 import com.robi.tenminuteschool.constant.Methods;
@@ -45,7 +46,7 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.MainLi
         final Items item = itemsList.get(position);
 
         if (item.getImage() != 0) {
-            holder.image.setVisibility(View.VISIBLE);
+            holder.imageHolder.setVisibility(View.VISIBLE);
             Picasso.get().load(item.getImage())
                     .into(holder.image, new com.squareup.picasso.Callback() {
                         @Override
@@ -58,21 +59,38 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.MainLi
                         }
                     });
         } else {
-            holder.image.setVisibility(View.GONE);
+            holder.imageHolder.setVisibility(View.GONE);
         }
         holder.txtHeading.setText(item.getHeading());
 
         if (item.getItemSubs() != null) {
-            holder.headerIndicator.setVisibility(View.VISIBLE);
+            holder.arrowBtn.setVisibility(View.VISIBLE);
             final LinearLayoutManager layoutManager = new LinearLayoutManager(context);
             layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
             holder.rvSubItem.setLayoutManager(layoutManager);
             AdapterSubItem adapter = new AdapterSubItem(item.getItemSubs(), context);
             holder.rvSubItem.setItemAnimator(new DefaultItemAnimator());
             holder.rvSubItem.setAdapter(adapter);
+
+            holder.holderMain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    if (holder.expandableView.getVisibility() == View.GONE) {
+                        TransitionManager.beginDelayedTransition(holder.holderMain, new AutoTransition());
+                        holder.expandableView.setVisibility(View.VISIBLE);
+                        holder.arrowBtn.setBackgroundResource(R.drawable.ic_arrow_up);
+                    } else {
+                        TransitionManager.beginDelayedTransition(holder.holderMain, new AutoTransition());
+                        holder.expandableView.setVisibility(View.GONE);
+                        holder.arrowBtn.setBackgroundResource(R.drawable.ic_arrow_down);
+                    }
+                }
+            });
+
         } else {
-            holder.headerIndicator.setVisibility(View.GONE);
-            holder.expansionHeader.setOnClickListener(new View.OnClickListener() {
+            holder.arrowBtn.setVisibility(View.GONE);
+
+            holder.holderMain.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     new Methods(context).showToast(item.getHeading() + " tapped");
@@ -89,21 +107,23 @@ public class AdapterMainList extends RecyclerView.Adapter<AdapterMainList.MainLi
     public class MainListHolder extends RecyclerView.ViewHolder {
         TextView txtHeading;
         ImageView image;
-        ImageView headerIndicator;
+        //        ImageView headerIndicator;
         RecyclerView rvSubItem;
-        ExpansionLayout expansionLayout;
-        ExpansionHeader expansionHeader;
         MaterialCardView holderMain;
+        CardView imageHolder;
+        ConstraintLayout expandableView;
+        ImageView arrowBtn;
 
         public MainListHolder(@NonNull View itemView) {
             super(itemView);
             txtHeading = itemView.findViewById(R.id.txt_heading);
             image = itemView.findViewById(R.id.img_header);
-            headerIndicator = itemView.findViewById(R.id.header_indicator);
+//            headerIndicator = itemView.findViewById(R.id.header_indicator);
             rvSubItem = itemView.findViewById(R.id.rv_sub_item);
-            expansionLayout = itemView.findViewById(R.id.expansionLayout);
-            expansionHeader = itemView.findViewById(R.id.expansion_header);
-            holderMain = itemView.findViewById(R.id.holder_main);
+            holderMain = itemView.findViewById(R.id.cardView);
+            expandableView = itemView.findViewById(R.id.expandableView);
+            arrowBtn = itemView.findViewById(R.id.arrowBtn);
+            imageHolder = itemView.findViewById(R.id.image_holder);
         }
     }
 }

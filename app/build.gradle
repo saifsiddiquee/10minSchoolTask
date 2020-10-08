@@ -32,8 +32,6 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
     //material design
     implementation 'com.google.android.material:material:1.2.1'
-    //expandable layout
-    implementation 'com.github.florent37:expansionpanel:1.2.3'
     //picasso image loading
     implementation 'com.squareup.picasso:picasso:2.71828'
     testImplementation 'junit:junit:4.12'
