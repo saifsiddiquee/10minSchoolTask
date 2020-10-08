@@ -18,7 +18,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String TAG = "MAIN___";
     private ActivityMainBinding bindingMain;
     private AdapterMainList mAdapter;
     private List<Items> itemsList = new ArrayList<>();
@@ -44,8 +43,6 @@ public class MainActivity extends AppCompatActivity {
         bindingMain.rvList.setAdapter(mAdapter);
 
         prepareItems();
-
-        Log.d(TAG, "initView: " + itemsList.size());
     }
 
     //preparing data for main list

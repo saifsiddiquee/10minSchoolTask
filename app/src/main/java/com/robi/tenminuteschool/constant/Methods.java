@@ -15,7 +15,7 @@ public class Methods {
 
     public void showToast(String message) {
         try {
-            Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             //don't do anything here...
         }

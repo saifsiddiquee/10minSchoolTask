@@ -19,10 +19,13 @@
         android:orientation="vertical">
 
         <com.github.florent37.expansionpanel.ExpansionHeader
+            android:id="@+id/expansion_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="40dp"
-            app:expansion_headerIndicator="@id/headerIndicator"
+            android:foreground="?selectableItemBackground"
+            app:expansion_headerIndicator="@id/header_indicator"
+            app:expansion_toggleOnClick="true"
             app:expansion_layout="@id/expansionLayout">
 
             <!-- HEADER -->
@@ -63,7 +66,7 @@
 
                 <!-- HEADER INDICATOR -->
                 <ImageView
-                    android:id="@+id/headerIndicator"
+                    android:id="@+id/header_indicator"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"

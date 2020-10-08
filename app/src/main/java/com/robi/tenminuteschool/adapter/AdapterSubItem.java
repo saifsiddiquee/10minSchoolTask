@@ -21,7 +21,7 @@ import java.util.List;
 
 public class AdapterSubItem extends RecyclerView.Adapter<AdapterSubItem.SubItemHolder> {
 
-    List<ItemSub> itemsList;
+    private List<ItemSub> itemsList;
     private Activity context;
 
     public AdapterSubItem(List<ItemSub> itemsList, Activity context) {
